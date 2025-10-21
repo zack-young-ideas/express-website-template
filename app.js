@@ -4,7 +4,7 @@ import { fileURLToPath } from 'url';
 import express from 'express';
 import { engine } from 'express-handlebars';
 
-import { login } from './routes.js';
+import { createUser, login } from './routes.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -24,5 +24,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/login', login.get);
+
+app.get('/users/create', createUser.get);
 
 export default app;

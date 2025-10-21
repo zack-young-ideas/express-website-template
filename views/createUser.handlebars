@@ -1,0 +1,27 @@
+<div class="container px-4 text-center">
+  <div class="row">
+    <div class="col-12 mt-4">
+      <form method="post" action="{% url 'login' %}">
+        <fieldset class="border p-4">
+          <legend class="h2 mb-3">Create User</legend>
+          {{{formHtml}}}
+          <input
+            name="csrfmiddlewaretoken"
+            value="{{csrfToken}}"
+            type="hidden"
+          />
+          <input
+            class="btn btn-primary mb-3 px-5"
+            type="submit"
+            value="Create"
+          />
+          <p>
+            <a href="/login">
+              Return to login
+            </a>
+          </p>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+</div>
