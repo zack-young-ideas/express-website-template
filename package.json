@@ -1,0 +1,21 @@
+{
+  "name": "express_auth",
+  "version": "1.0.0",
+  "description": "A minimalist website that allows users to create an account and log in.",
+  "license": "MIT",
+  "author": "Zack Young",
+  "type": "module",
+  "main": "app.js",
+  "scripts": {
+    "build": "sass scss/styles.scss public/css/styles.css",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "express-handlebars": "^8.0.1"
+  },
+  "devDependencies": {
+    "bootstrap": "^5.3.8",
+    "sass": "^1.93.2"
+  }
+}
