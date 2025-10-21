@@ -1,1 +1,7 @@
-@import '../node_modules/bootstrap/scss/bootstrap';
+@use '../node_modules/bootstrap/scss/bootstrap' with (
+  $primary: #ff4d6d,
+);
+
+.btn, .btn:hover {
+  color: bootstrap.$white;
+}
