@@ -1,4 +1,4 @@
-import app from './app.js';
+import app from './src/app.js';
 
 if (process.env.NODE_ENV === 'production') {
   app.listen(3000, () => null);

@@ -17,7 +17,7 @@ app.set('view engine', 'handlebars');
 app.set('views', './views');
 
 // Configure the app to serve static files.
-app.use('/static/', express.static(join(__dirname, 'public')));
+app.use('/static/', express.static(join(__dirname, '..', 'public')));
 
 app.get('/', (req, res) => {
   res.redirect('/login');
