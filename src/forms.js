@@ -1,7 +1,50 @@
+import settings from '../config.js';
+import commonPasswords from './commonPasswords.js'
+
 class CreateUserForm {
   constructor(args) {
-    this.firstName = args?.firstName;
-    this.lastName = args?.lastName;
+    this.firstName = args?.first_name;
+    this.lastName = args?.last_name;
+    this.password = args?.password;
+    this.confirmPassword = args?.confirm_password;
+    this.secretKey = args?.secret_key;
+    this.error = null;
+  }
+
+  isValid() {
+    if (!this.firstName) {
+      this.error = 'First name is required';
+      return false;
+    }
+    if (!this.lastName) {
+      this.error = 'Last name is required';
+      return false;
+    }
+    if (!this.password) {
+      this.error = 'Password is required';
+      return false;
+    }
+    if (this.password !== this.confirmPassword) {
+      this.error = "Passwords don't match";
+      return false;
+    }
+    if (this.password.length < 9) {
+      this.error = 'Password must be at least 9 characters long';
+      return false;
+    }
+    if (commonPasswords.indexOf(this.password) > -1) {
+      this.error = 'Choose a less common password';
+      return false;
+    }
+    if (!this.secretKey) {
+      this.error = 'Secret key is required';
+      return false;
+    }
+    if (this.secretKey !== settings.SECRET_KEY) {
+      this.error = 'Invalid secret key';
+      return false;
+    }
+    return true;
   }
 
   asP() {

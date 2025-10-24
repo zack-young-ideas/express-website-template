@@ -140,3 +140,6 @@ public/
 
 # Ignore swap files
 *.swp
+
+# Ignore SQLite database files used in development
+.sqlite.db
