@@ -1,5 +1,6 @@
 import settings from '../config.js';
-import commonPasswords from './commonPasswords.js'
+import commonPasswords from './commonPasswords.js';
+import validator from 'validator.js';
 
 class CreateUserForm {
   constructor(args) {
@@ -16,8 +17,16 @@ class CreateUserForm {
       this.error = 'Email name is required';
       return false;
     }
+    if (!validator.isEmail(this.email)) {
+      this.error = 'Email is invalid';
+      return false;
+    }
     if (!this.confirmEmail) {
       this.error = "Please confirm the email you've entered";
+      return false;
+    }
+    if (!validator.isEmail(this.confirmEmail)) {
+      this.error = 'Email is invalid';
       return false;
     }
     if (this.email !== this.confirmEmail) {
@@ -110,6 +119,10 @@ class MobilePhoneForm {
   isValid() {
     if (!this.phone) {
       this.error = 'Moile number is required';
+      return false;
+    }
+    if (!validator.isMobilePhone(this.phone, 'en-US')) {
+      this.error = 'Invalid moile number';
       return false;
     }
   }
