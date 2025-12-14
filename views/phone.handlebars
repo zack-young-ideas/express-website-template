@@ -4,17 +4,35 @@
       <form method="post" action="/users/create/phone">
         <fieldset class="border p-4">
           <legend class="h2 mb-3">Mobile Number</legend>
-          <input
-            class="form-control"
-            name="phone"
-            placeholder="Phone Number"
-            type="text"
-          />
-          <input
-            name="csrfmiddlewaretoken"
-            value="{{csrfToken}}"
-            type="hidden"
-          />
+          <p>Please enter your mobile phone number.
+          You will receive a unique 6-digit code to
+          verify your number.</p>
+          <p>
+            <input
+              class="form-control"
+              id="id_mobile_number"
+              name="phone"
+              placeholder="Phone Number"
+              type="text"
+            />
+          </p>
+          <p>
+            <input
+              class="form-control"
+              id="id_sms_token"
+              name="sms_token"
+              placeholder="SMS Token"
+              style="display:none;"
+              type="text"
+            />
+          </p>
+          <p>
+            <input
+              name="csrfmiddlewaretoken"
+              value="{{csrfToken}}"
+              type="hidden"
+            />
+          </p>
           <input
             class="btn btn-primary mb-3 px-5"
             type="submit"

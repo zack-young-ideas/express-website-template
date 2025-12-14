@@ -3,7 +3,9 @@ import { fileURLToPath } from 'url';
 
 import express from 'express';
 import { engine } from 'express-handlebars';
+import cookieParser from 'cookie-parser';
 
+import { csrfMiddleware } from './middleware.js';
 import { addMobilePhone, createUser, login } from './routes.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -22,6 +24,12 @@ app.use('/static/', express.static(join(__dirname, '..', 'public')));
 // Enable parsing POST data.
 app.use(express.urlencoded({ extended: true }));
 
+// Enable cookies
+app.use(cookieParser());
+
+// Use CSRF middleware.
+app.use(csrfMiddleware);
+
 app.get('/', (req, res) => {
   res.redirect('/login');
 });
@@ -31,5 +39,6 @@ app.get('/login', login.get);
 app.get('/users/create', createUser.get);
 app.post('/users/create', createUser.post);
 app.get('/users/create/phone', addMobilePhone.get);
+app.get('/api/users/phone', addMobilePhone.post);
 
 export default app;

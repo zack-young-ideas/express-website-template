@@ -54,4 +54,32 @@ const maskCipherToken = (secret) => {
   return mask + cipher;
 }
 
+const unmaskCipherToken = (inputToken) => {
+  const mask = inputToken.slice(0, 32);
+  const token = inputToken.slice(32);
+
+  const pairs = [];
+  for (let index = 0; index < token.length; index++) {
+    const maskItem = mask[index];
+    const tokenItem = token[index];
+    pairs.push(
+      [ALPHABET.indexOf(tokenItem), ALPHABET.indexOf(maskItem)]
+    );
+  }
+
+  const secretArray = [];
+  pairs.forEach((item) => {
+    const firstItem = item[0];
+    const secondItem = item[1];
+    let difference = firstItem - secondItem;
+    if (difference < 0) {
+      difference = ALPHABET.length + difference;
+    }
+    const letter = ALPHABET[difference];
+    secretArray.push(letter);
+  });
+
+  return secretArray.join('');
+}
+
 export { getRandomString, maskCipherToken };

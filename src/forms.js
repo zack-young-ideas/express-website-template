@@ -3,8 +3,8 @@ import commonPasswords from './commonPasswords.js'
 
 class CreateUserForm {
   constructor(args) {
-    this.firstName = args?.first_name;
-    this.lastName = args?.last_name;
+    this.email = args?.email;
+    this.confirmEmail = args?.confirm_email;
     this.password = args?.password;
     this.confirmPassword = args?.confirm_password;
     this.secretKey = args?.secret_key;
@@ -12,12 +12,16 @@ class CreateUserForm {
   }
 
   isValid() {
-    if (!this.firstName) {
-      this.error = 'First name is required';
+    if (!this.email) {
+      this.error = 'Email name is required';
       return false;
     }
-    if (!this.lastName) {
-      this.error = 'Last name is required';
+    if (!this.confirmEmail) {
+      this.error = "Please confirm the email you've entered";
+      return false;
+    }
+    if (this.email !== this.confirmEmail) {
+      this.error = 'Emails do not match';
       return false;
     }
     if (!this.password) {
@@ -51,8 +55,8 @@ class CreateUserForm {
     const output = `<p>
   <input
     class="form-control"
-    placeholder="First Name"
-    name="first_name"
+    placeholder="Email"
+    name="email"
     required
     type="text"
   />
@@ -60,8 +64,8 @@ class CreateUserForm {
 <p>
   <input
     class="form-control"
-    placeholder="Last Name"
-    name="last_name"
+    placeholder="Confirm Email"
+    name="confirm_email"
     required
     type="text"
   />
@@ -97,4 +101,18 @@ class CreateUserForm {
   }
 }
 
-export default CreateUserForm;
+class MobilePhoneForm {
+  constructor(args) {
+    this.phone = args?.mobile_number;
+    this.error = null;
+  }
+
+  isValid() {
+    if (!this.phone) {
+      this.error = 'Moile number is required';
+      return false;
+    }
+  }
+}
+
+export { CreateUserForm, MobilePhoneForm };

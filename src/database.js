@@ -8,13 +8,13 @@ const getConnection = () => {
 }
 
 const database = {
-  createUser: async (firstName, lastName, password) => {
+  createUser: async (email, password) => {
     try {
       console.log(password);
       const hashedPassword = await argon2.hash(password);
       const db = getConnection();
-      const insertString = 'INSERT INTO users (first_name, last_name, password) '
-                         + 'VALUES (?, ?, ?);';
+      const insertString = 'INSERT INTO users (email, password) '
+                         + 'VALUES (?, ?);';
       const statement = db.prepare(insertString);
       statement.run(firstName, lastName, hashedPassword);
     } catch (err) {
@@ -28,8 +28,7 @@ const database = {
       db.exec(
         `CREATE TABLE IF NOT EXISTS users (
 id INT AUTO_INCREMENT PRIMARY KEY,
-first_name VARCHAR(128) NOT NULL,
-last_name VARCHAR(128) NOT NULL,
+email VARCHAR(128) NOT NULL,
 password VARCHAR(255) NOT NULL
 );`
       );
