@@ -9,6 +9,7 @@
   "scripts": {
     "build:sass": "sass scss/styles.scss public/css/styles.css",
     "build:js": "webpack --config webpack.config.js",
+    "migrate": "node bin.js",
     "build": "npm run build:sass & npm run build:js",
     "dev": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -20,8 +21,11 @@
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
     "express-handlebars": "^8.0.1",
+    "express-session": "^1.18.2",
     "jquery": "^3.7.1",
     "mysql2": "^3.15.3",
+    "passport": "^0.7.0",
+    "passport-local": "^1.0.0",
     "validator": "^13.15.23"
   },
   "devDependencies": {

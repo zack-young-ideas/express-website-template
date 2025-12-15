@@ -60,13 +60,16 @@ const addMobilePhone = {
       javascript: javascript_code,
     }
     res.render('phone', variables);
-  }
+  },
 
   post: async (req, res) => {
     const form = new MobilePhoneForm(req.body);
     if (form.isValid()) {
       // Create a new SMS token object.
-
+      await database.createSMSToken(req.user, form.phone);
+      res.status(200).json({});
+    } else {
+      res.status(400).json({ error: form.error });
     }
   }
 }

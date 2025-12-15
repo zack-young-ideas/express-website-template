@@ -1,10 +1,14 @@
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 
+import cookieParser from 'cookie-parser';
 import express from 'express';
 import { engine } from 'express-handlebars';
-import cookieParser from 'cookie-parser';
+import session from 'express-session';
+import passport from 'passport';
 
+import settings from '../config.js';
+import configurePassport from './configPassport.js';
 import { csrfMiddleware } from './middleware.js';
 import { addMobilePhone, createUser, login } from './routes.js';
 
@@ -26,6 +30,22 @@ app.use(express.urlencoded({ extended: true }));
 
 // Enable cookies
 app.use(cookieParser());
+
+// Enable sessions.
+app.use(session({
+  secret: settings.SESSION_KEY,
+  resave: false,
+  saveUnitialized: false,
+  cookie: {
+    secure: false,
+    maxAge: 60000,
+  },
+}));
+
+// Configure passport.
+configurePassport(passport);
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Use CSRF middleware.
 app.use(csrfMiddleware);

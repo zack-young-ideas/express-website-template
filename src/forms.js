@@ -1,6 +1,6 @@
 import settings from '../config.js';
 import commonPasswords from './commonPasswords.js';
-import validator from 'validator.js';
+import validator from 'validator';
 
 class CreateUserForm {
   constructor(args) {
