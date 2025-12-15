@@ -38,7 +38,10 @@ window.userManager = {
           url: endpoint,
           type: 'POST',
           data: JSON.stringify({ mobile_number: mobileFormField.val() }),
-          headers: { 'X-CSRFToken': csrfToken },
+          headers: {
+            'X-CSRFToken': csrfToken,
+            'Content-Type': 'application/json',
+          },
           dataType: 'text',
         })
         .done((data, textStatus, xhr) => {

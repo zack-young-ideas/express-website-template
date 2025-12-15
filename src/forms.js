@@ -125,6 +125,7 @@ class MobilePhoneForm {
       this.error = 'Invalid moile number';
       return false;
     }
+    return true;
   }
 }
 

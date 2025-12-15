@@ -10,7 +10,12 @@ import passport from 'passport';
 import settings from '../config.js';
 import configurePassport from './configPassport.js';
 import { csrfMiddleware } from './middleware.js';
-import { addMobilePhone, createUser, login } from './routes.js';
+import {
+  addMobilePhone,
+  createUser,
+  login,
+  verifyMobilePhone
+} from './routes.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -27,6 +32,9 @@ app.use('/static/', express.static(join(__dirname, '..', 'public')));
 
 // Enable parsing POST data.
 app.use(express.urlencoded({ extended: true }));
+
+// Enable parsing JSON data.
+app.use(express.json());
 
 // Enable cookies
 app.use(cookieParser());
@@ -59,6 +67,6 @@ app.get('/login', login.get);
 app.get('/users/create', createUser.get);
 app.post('/users/create', createUser.post);
 app.get('/users/create/phone', addMobilePhone.get);
-app.get('/api/users/phone', addMobilePhone.post);
+app.post('/api/users/phone', verifyMobilePhone.post);
 
 export default app;

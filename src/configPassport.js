@@ -5,8 +5,8 @@ import database from './database.js';
 
 export default (passport) => {
   passport.use(new LocalStrategy(
-    async (email, password, done) => {
-      const user = await database.authenticateUser(email, password);
+    (email, password, done) => {
+      const user = database.authenticateUser(email, password);
       if (user === null) {
         return done(null, false);
       } else {
@@ -15,9 +15,11 @@ export default (passport) => {
     }
   ));
 
-  passport.serializeUser((user, done) => done(null, user.id));
-  passport.deserializeUser(async (id, done) => {
-    const user = await database.getUser(id);
+  passport.serializeUser(function(user, done) {
+    done(null, user.user_id);
+  });
+  passport.deserializeUser(function(user_id, done) {
+    const user = database.getUser(user_id);
     if (user === null) {
       return done(null, false);
     } else {

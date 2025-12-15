@@ -26,24 +26,28 @@ const createUser = {
     const form = new CreateUserForm(req.body);
     if (form.isValid()) {
       // Create a new user.
-      await database.createUser(
+      const user = await database.createUser(
         form.email,
         form.password,
       );
-      // Redirect to next page.
-      res.redirect('/users/create/phone');
-    } else {
-      const csrfSecret = getRandomString();
-      const csrfToken = maskCipherToken(csrfSecret);
-      res.cookie('csrftoken', csrfSecret);
-      res.set('X-CSRF-Token', csrfToken);
-      const variables = {
-        title: 'Create User',
-        error: form.error,
-        formHtml: form.asP(),
+      if (user !== null) {
+        // Log the user in.
+        return req.login(user, (err) => {
+          // Redirect to next page.
+          res.redirect('/users/create/phone');
+        });
       }
-      res.render('createUser', variables);
     }
+    const csrfSecret = getRandomString();
+    const csrfToken = maskCipherToken(csrfSecret);
+    res.cookie('csrftoken', csrfSecret);
+    res.set('X-CSRF-Token', csrfToken);
+    const variables = {
+      title: 'Create User',
+      error: form.error,
+      formHtml: form.asP(),
+    }
+    res.render('createUser', variables);
   }
 }
 
@@ -61,12 +65,15 @@ const addMobilePhone = {
     }
     res.render('phone', variables);
   },
+}
 
-  post: async (req, res) => {
+const verifyMobilePhone = {
+  post: (req, res) => {
     const form = new MobilePhoneForm(req.body);
     if (form.isValid()) {
       // Create a new SMS token object.
-      await database.createSMSToken(req.user, form.phone);
+      const token = database.createSMSToken(req.user, form.phone);
+      console.log(`Your mobile verification code is ${token}.`);
       res.status(200).json({});
     } else {
       res.status(400).json({ error: form.error });
@@ -74,4 +81,4 @@ const addMobilePhone = {
   }
 }
 
-export { addMobilePhone, createUser, login };
+export { addMobilePhone, createUser, login, verifyMobilePhone };
